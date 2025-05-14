@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5001;
 app.use(express.json());
 
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173',"https://medicalremider.onrender.com"],
   methods: 'GET, POST, PUT, DELETE, PATCH, HEAD',
   credentials: true,
 };
