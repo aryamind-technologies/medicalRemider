@@ -5,10 +5,12 @@ const bodyParser = require('body-parser');
 const connectDb = require('./utils/db');
 const medicineRoutes = require('./routes/PatientRoutes');
 const authRoute = require('./routes/auth-router');
-
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
+
+app.use(express.json());
 
 const corsOptions = {
   origin: 'http://localhost:5173',
@@ -25,6 +27,11 @@ app.use(bodyParser.json());
 app.use('/api', medicineRoutes);
 app.use('/api/auth', authRoute);
 
+// Resolve dirname using CommonJS
+app.use(express.static(path.join(__dirname, '/client/dist')));
+
+//render client
+app.get('*', (req,res) => res.sendFile(path.join(__dirname, '/client/dist/index.html')));
 
 connectDb()
   .then(() => {
